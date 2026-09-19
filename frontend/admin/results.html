@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>System Results — Admin</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header"><div class="sidebar-logo">ExamCloud <span>AI</span></div></div>
+      <nav class="sidebar-nav">
+        <a href="/static/admin/dashboard.html" class="nav-item">📊 Dashboard</a>
+        <a href="/static/admin/users.html" class="nav-item">👥 User Directory</a>
+        <a href="/static/admin/teachers.html" class="nav-item">👨‍🏫 Teachers</a>
+        <a href="/static/admin/students.html" class="nav-item">🎓 Students</a>
+        <a href="/static/admin/subjects.html" class="nav-item">📚 Subjects</a>
+        <a href="/static/admin/exams.html" class="nav-item">📝 Exam Monitor</a>
+        <a href="/static/admin/results.html" class="nav-item active">📈 System Results</a>
+      </nav>
+      <div class="sidebar-user">
+        <div class="user-info">
+          <div class="avatar" id="header-user-avatar">A</div>
+          <div class="user-details"><h5 id="header-user-name">Admin</h5><span id="header-user-role">ADMIN</span></div>
+        </div>
+        <button onclick="handleLogout()" class="btn btn-sm btn-outline" style="color:#FFF; border-color:#475569;">Exit</button>
+      </div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar">
+        <div class="page-title"><h2>System Results & Audit Trail</h2></div>
+      </header>
+      <div class="content-body">
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Attempt #</th>
+                <th>Student</th>
+                <th>Exam Title</th>
+                <th>Score</th>
+                <th>Percentage</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="admin-results-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      checkAuthGuard("admin");
+      const tbody = document.getElementById("admin-results-body");
+      try {
+        const results = await apiFetch("/results");
+        if (results.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="6" style="text-align:center; padding:24px;">No submitted exam results recorded.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = results.map(r => `
+          <tr>
+            <td>#${r.attempt_id}</td>
+            <td><strong>${r.student_name}</strong> (${r.student_roll || 'N/A'})</td>
+            <td>${r.exam_title}</td>
+            <td>${r.score} / ${r.total_marks}</td>
+            <td>${r.percentage}%</td>
+            <td><span class="badge ${r.is_passed ? 'badge-success' : 'badge-danger'}">${r.is_passed ? 'PASSED' : 'FAILED'}</span></td>
+          </tr>
+        `).join("");
+      } catch (err) {
+        showToast("Error loading results", "danger");
+      }
+    });
+  </script>
+</body>
+</html>

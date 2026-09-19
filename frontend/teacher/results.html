@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submissions & Results — Teacher</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header"><div class="sidebar-logo">ExamCloud <span>AI</span></div></div>
+      <nav class="sidebar-nav">
+        <a href="/static/teacher/dashboard.html" class="nav-item">📊 Dashboard</a>
+        <a href="/static/teacher/create-exam.html" class="nav-item">➕ Create Exam</a>
+        <a href="/static/teacher/exams.html" class="nav-item">📝 My Exams</a>
+        <a href="/static/teacher/results.html" class="nav-item active">📈 Submissions & Results</a>
+        <a href="/static/teacher/analytics.html" class="nav-item">📊 Performance Analytics</a>
+      </nav>
+      <div class="sidebar-user">
+        <div class="user-info">
+          <div class="avatar" id="header-user-avatar">T</div>
+          <div class="user-details"><h5 id="header-user-name">Teacher</h5><span id="header-user-role">TEACHER</span></div>
+        </div>
+        <button onclick="handleLogout()" class="btn btn-sm btn-outline" style="color:#FFF; border-color:#475569;">Exit</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="page-title"><h2>Student Submission Scores</h2></div>
+      </header>
+
+      <div class="content-body">
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Attempt #</th>
+                <th>Student Name</th>
+                <th>Roll Number</th>
+                <th>Exam Title</th>
+                <th>Score</th>
+                <th>Percentage</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody id="teacher-results-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      checkAuthGuard("teacher");
+      const tbody = document.getElementById("teacher-results-body");
+      const urlParams = new URLSearchParams(window.location.search);
+      const examId = urlParams.get("exam_id");
+
+      const endpoint = examId ? `/exams/${examId}/results` : "/results";
+      try {
+        const results = await apiFetch(endpoint);
+        if (results.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:24px;">No student submissions found.</td></tr>`;
+          return;
+        }
+
+        tbody.innerHTML = results.map(r => `
+          <tr>
+            <td>#${r.attempt_id}</td>
+            <td><strong>${r.student_name}</strong></td>
+            <td>${r.student_roll || 'N/A'}</td>
+            <td>${r.exam_title}</td>
+            <td><strong>${r.score} / ${r.total_marks}</strong></td>
+            <td>${r.percentage}%</td>
+            <td><span class="badge ${r.is_passed ? 'badge-success' : 'badge-danger'}">${r.is_passed ? 'PASSED' : 'FAILED'}</span></td>
+          </tr>
+        `).join("");
+      } catch (err) {
+        showToast("Error loading results", "danger");
+      }
+    });
+  </script>
+</body>
+</html>

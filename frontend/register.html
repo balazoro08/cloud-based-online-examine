@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Registration — ExamCloud AI</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/auth.css">
+</head>
+<body class="auth-page">
+
+  <div class="auth-container">
+    <div class="auth-brand">
+      <div class="auth-brand-logo">ExamCloud <span>AI</span></div>
+      <p class="auth-subtitle">Create your student assessment account</p>
+    </div>
+
+    <form id="register-form" onsubmit="handleRegister(event)">
+      <div class="form-group">
+        <label class="form-label" for="name">Full Name</label>
+        <input type="text" id="name" class="form-control" placeholder="Jane Doe" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input type="email" id="email" class="form-control" placeholder="jane@student.edu" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="roll_number">Roll / Student ID Number</label>
+        <input type="text" id="roll_number" class="form-control" placeholder="CS-2026-108">
+      </div>
+
+      <div class="grid grid-2">
+        <div class="form-group">
+          <label class="form-label" for="department">Department</label>
+          <select id="department" class="form-control">
+            <option value="Computer Science">Computer Science</option>
+            <option value="Mathematics">Mathematics</option>
+            <option value="Physics">Physics</option>
+            <option value="Electrical Engineering">Electrical Engineering</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label" for="year">Year of Study</label>
+          <select id="year" class="form-control">
+            <option value="1st Year">1st Year</option>
+            <option value="2nd Year">2nd Year</option>
+            <option value="3rd Year" selected>3rd Year</option>
+            <option value="4th Year">4th Year</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Create Account →</button>
+    </form>
+
+    <div style="text-align: center; margin-top: 24px; font-size: 14px; color: var(--text-muted);">
+      Already registered? <a href="/static/login.html">Sign in here</a>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+</body>
+</html>

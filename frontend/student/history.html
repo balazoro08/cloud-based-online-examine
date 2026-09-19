@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam History — Student</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header"><div class="sidebar-logo">ExamCloud <span>AI</span></div></div>
+      <nav class="sidebar-nav">
+        <a href="/static/student/dashboard.html" class="nav-item">📊 Dashboard</a>
+        <a href="/static/student/exams.html" class="nav-item">📝 Available Exams</a>
+        <a href="/static/student/history.html" class="nav-item active">📈 Exam History</a>
+      </nav>
+      <div class="sidebar-user">
+        <div class="user-info">
+          <div class="avatar" id="header-user-avatar">S</div>
+          <div class="user-details"><h5 id="header-user-name">Student</h5><span id="header-user-role">STUDENT</span></div>
+        </div>
+        <button onclick="handleLogout()" class="btn btn-sm btn-outline" style="color:#FFF; border-color:#475569;">Exit</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="page-title"><h2>Complete Examination History</h2></div>
+      </header>
+
+      <div class="content-body">
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Exam Title</th>
+                <th>Subject</th>
+                <th>Date Completed</th>
+                <th>Score</th>
+                <th>Status</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="student-history-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/student.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      checkAuthGuard("student");
+      loadStudentHistory();
+    });
+  </script>
+</body>
+</html>

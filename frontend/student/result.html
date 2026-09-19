@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Examination Result — ExamCloud AI</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header"><div class="sidebar-logo">ExamCloud <span>AI</span></div></div>
+      <nav class="sidebar-nav">
+        <a href="/static/student/dashboard.html" class="nav-item">📊 Dashboard</a>
+        <a href="/static/student/exams.html" class="nav-item">📝 Available Exams</a>
+        <a href="/static/student/history.html" class="nav-item active">📈 Exam History</a>
+      </nav>
+      <div class="sidebar-user">
+        <div class="user-info">
+          <div class="avatar" id="header-user-avatar">S</div>
+          <div class="user-details"><h5 id="header-user-name">Student</h5><span id="header-user-role">STUDENT</span></div>
+        </div>
+        <button onclick="handleLogout()" class="btn btn-sm btn-outline" style="color:#FFF; border-color:#475569;">Exit</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="page-title"><h2>Official Examination Scorecard</h2></div>
+        <div class="topbar-actions">
+          <a href="/static/student/dashboard.html" class="btn btn-secondary btn-sm">Return to Dashboard</a>
+        </div>
+      </header>
+
+      <div class="content-body" style="max-width: 900px;">
+        <!-- Score Overview Card -->
+        <div class="card" style="text-align:center; padding:40px; margin-bottom:32px; background: linear-gradient(135deg, #FFFFFF 0%, #EEF2FF 100%); border:2px solid var(--primary-light);">
+          <span id="res-status-badge" class="badge badge-success" style="font-size:14px; padding:6px 16px; margin-bottom:12px;">PASSED</span>
+          <h1 id="res-title" style="margin-bottom:6px;">Examination Result</h1>
+          <p id="res-subject" style="color:var(--text-muted); font-weight:600;">Subject Name</p>
+
+          <div style="display:flex; justify-content:center; gap:40px; margin:32px 0;">
+            <div>
+              <span style="font-size:13px; color:var(--text-muted); font-weight:600;">MARKS OBTAINED</span>
+              <div style="font-size:36px; font-weight:800; color:var(--primary);" id="res-score">0 / 0</div>
+            </div>
+            <div>
+              <span style="font-size:13px; color:var(--text-muted); font-weight:600;">PERCENTAGE SCORE</span>
+              <div style="font-size:36px; font-weight:800; color:var(--dark-navy);" id="res-percentage">0%</div>
+            </div>
+          </div>
+
+          <div class="grid grid-4" style="background:#FFFFFF; border-radius:12px; padding:16px; border:1px solid var(--border-color);">
+            <div>
+              <span style="font-size:12px; color:var(--text-muted);">Total Questions</span>
+              <h4 id="res-total-q">0</h4>
+            </div>
+            <div>
+              <span style="font-size:12px; color:var(--success);">Correct</span>
+              <h4 id="res-correct" style="color:var(--success);">0</h4>
+            </div>
+            <div>
+              <span style="font-size:12px; color:var(--danger);">Incorrect</span>
+              <h4 id="res-incorrect" style="color:var(--danger);">0</h4>
+            </div>
+            <div>
+              <span style="font-size:12px; color:var(--warning);">Unanswered</span>
+              <h4 id="res-unanswered" style="color:var(--warning);">0</h4>
+            </div>
+          </div>
+        </div>
+
+        <!-- Detailed Question Breakdown -->
+        <h3 style="margin-bottom:20px;">Question-wise Evaluation Breakdown</h3>
+        <div id="answers-breakdown-container">
+          <!-- Rendered via JavaScript -->
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/student.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", loadResultReport);
+  </script>
+</body>
+</html>

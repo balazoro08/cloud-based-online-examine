@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ExamCloud AI — Cloud-Based Online Examination System</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <style>
+    .hero {
+      background: linear-gradient(135deg, #0F172A 0%, #1E1B4B 100%);
+      color: #FFFFFF;
+      padding: 100px 32px 140px;
+      text-align: center;
+      position: relative;
+    }
+    .hero h1 {
+      font-size: 3.5rem;
+      color: #FFFFFF;
+      margin-bottom: 20px;
+    }
+    .hero p {
+      font-size: 1.25rem;
+      color: #94A3B8;
+      max-width: 700px;
+      margin: 0 auto 36px;
+    }
+    .nav-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 20px 40px;
+      background: #0F172A;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+    }
+    .nav-logo {
+      font-size: 24px;
+      font-weight: 800;
+      color: #FFFFFF;
+    }
+    .nav-logo span { color: var(--primary); }
+    .nav-links { display: flex; gap: 24px; align-items: center; }
+    .nav-link { color: #94A3B8; font-weight: 600; }
+    .nav-link:hover { color: #FFFFFF; }
+    .feature-card {
+      padding: 32px;
+      border-radius: 16px;
+      background: #FFFFFF;
+      border: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="nav-bar">
+    <div class="nav-logo">ExamCloud <span>AI</span></div>
+    <div class="nav-links">
+      <a href="#features" class="nav-link">Features</a>
+      <a href="#portals" class="nav-link">Portals</a>
+      <a href="/static/login.html" class="btn btn-outline" style="color:#FFF; border-color:#FFF;">Log In</a>
+      <a href="/static/register.html" class="btn btn-primary">Student Register</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <h1>Smarter Exams. Fairer Assessments.</h1>
+    <p>ExamCloud AI is a cloud-based examination and assessment platform empowering educational institutions to create, deliver, and evaluate secure digital examinations seamlessly.</p>
+    <div style="display:flex; justify-content:center; gap:16px;">
+      <a href="/static/login.html" class="btn btn-primary btn-lg">Access Portal →</a>
+      <a href="#features" class="btn btn-secondary btn-lg">Learn More</a>
+    </div>
+  </section>
+
+  <!-- Features Grid -->
+  <section id="features" style="max-width: 1200px; margin: -60px auto 80px; padding: 0 24px; position:relative; z-index:10;">
+    <div class="grid grid-3">
+      <div class="feature-card">
+        <div class="stat-icon stat-primary" style="margin-bottom:16px;">⚡</div>
+        <h3>Real-time Autosave & Timing</h3>
+        <p style="color:var(--text-muted); margin-top:8px;">Every response is automatically saved to the backend database instantly with server-enforced exam deadlines.</p>
+      </div>
+      <div class="feature-card">
+        <div class="stat-icon stat-success" style="margin-bottom:16px;">🤖</div>
+        <h3>Automatic Evaluation</h3>
+        <p style="color:var(--text-muted); margin-top:8px;">Backend scoring engine checks MCQ answer keys instantly upon submission and provides percentage breakdowns.</p>
+      </div>
+      <div class="feature-card">
+        <div class="stat-icon stat-warning" style="margin-bottom:16px;">🔒</div>
+        <h3>Role-Based Security</h3>
+        <p style="color:var(--text-muted); margin-top:8px;">JWT authentication with role guards ensuring total isolation for Admin, Teacher, and Student workflows.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Portals Section -->
+  <section id="portals" style="max-width: 1200px; margin: 0 auto 100px; padding: 0 24px;">
+    <h2 style="text-align:center; margin-bottom:40px;">Select Your Portal to Get Started</h2>
+    <div class="grid grid-3">
+      <div class="card card-hover" style="text-align:center; padding:40px 24px;">
+        <h3>Student Portal</h3>
+        <p style="color:var(--text-muted); margin: 12px 0 24px;">View available exams, take online assessments, view instant results & history.</p>
+        <a href="/static/login.html" class="btn btn-primary" style="width:100%;">Student Login</a>
+      </div>
+      <div class="card card-hover" style="text-align:center; padding:40px 24px;">
+        <h3>Teacher Portal</h3>
+        <p style="color:var(--text-muted); margin: 12px 0 24px;">Create examinations, manage question banks, publish tests, and analyze class performance.</p>
+        <a href="/static/login.html" class="btn btn-primary" style="width:100%;">Teacher Login</a>
+      </div>
+      <div class="card card-hover" style="text-align:center; padding:40px 24px;">
+        <h3>Admin Portal</h3>
+        <p style="color:var(--text-muted); margin: 12px 0 24px;">Manage users, teachers, students, subjects, system configuration, and audit logs.</p>
+        <a href="/static/login.html" class="btn btn-primary" style="width:100%;">Admin Login</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer style="background:#0F172A; color:#94A3B8; padding:40px 24px; text-align:center; font-size:14px; border-top:1px solid rgba(255,255,255,0.1);">
+    <p>© 2026 ExamCloud AI Inc. All rights reserved. Powered by Python FastAPI, SQLAlchemy, and HTML5.</p>
+  </footer>
+
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exam Monitor — Admin</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header"><div class="sidebar-logo">ExamCloud <span>AI</span></div></div>
+      <nav class="sidebar-nav">
+        <a href="/static/admin/dashboard.html" class="nav-item">📊 Dashboard</a>
+        <a href="/static/admin/users.html" class="nav-item">👥 User Directory</a>
+        <a href="/static/admin/teachers.html" class="nav-item">👨‍🏫 Teachers</a>
+        <a href="/static/admin/students.html" class="nav-item">🎓 Students</a>
+        <a href="/static/admin/subjects.html" class="nav-item">📚 Subjects</a>
+        <a href="/static/admin/exams.html" class="nav-item active">📝 Exam Monitor</a>
+        <a href="/static/admin/results.html" class="nav-item">📈 System Results</a>
+      </nav>
+      <div class="sidebar-user">
+        <div class="user-info">
+          <div class="avatar" id="header-user-avatar">A</div>
+          <div class="user-details"><h5 id="header-user-name">Admin</h5><span id="header-user-role">ADMIN</span></div>
+        </div>
+        <button onclick="handleLogout()" class="btn btn-sm btn-outline" style="color:#FFF; border-color:#475569;">Exit</button>
+      </div>
+    </aside>
+    <main class="main-content">
+      <header class="topbar">
+        <div class="page-title"><h2>System-Wide Examination Monitor</h2></div>
+      </header>
+      <div class="content-body">
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Exam Title</th>
+                <th>Subject</th>
+                <th>Teacher</th>
+                <th>Duration</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="admin-exams-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      checkAuthGuard("admin");
+      const tbody = document.getElementById("admin-exams-body");
+      try {
+        const exams = await apiFetch("/exams");
+        if (exams.length === 0) {
+          tbody.innerHTML = `<tr><td colspan="7" style="text-align:center; padding:24px;">No exams found.</td></tr>`;
+          return;
+        }
+        tbody.innerHTML = exams.map(e => `
+          <tr>
+            <td>#${e.id}</td>
+            <td><strong>${e.title}</strong></td>
+            <td>${e.subject_name || "General"}</td>
+            <td>${e.teacher_name || "Teacher"}</td>
+            <td>${e.duration_minutes} Mins</td>
+            <td><span class="badge ${e.status === 'published' ? 'badge-success' : 'badge-warning'}">${e.status.toUpperCase()}</span></td>
+            <td>
+              <button class="btn btn-sm btn-danger" onclick="deleteExamPrompt(${e.id}, '${e.title}')">Delete</button>
+            </td>
+          </tr>
+        `).join("");
+      } catch (err) {
+        showToast("Error loading exams", "danger");
+      }
+    });
+
+    async function deleteExamPrompt(id, title) {
+      if (confirm(`Delete exam "${title}"?`)) {
+        try {
+          await apiFetch(`/exams/${id}`, { method: "DELETE" });
+          showToast("Exam deleted", "success");
+          location.reload();
+        } catch (err) {
+          showToast("Failed to delete exam", "danger");
+        }
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Examinations — Teacher</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header"><div class="sidebar-logo">ExamCloud <span>AI</span></div></div>
+      <nav class="sidebar-nav">
+        <a href="/static/teacher/dashboard.html" class="nav-item">📊 Dashboard</a>
+        <a href="/static/teacher/create-exam.html" class="nav-item">➕ Create Exam</a>
+        <a href="/static/teacher/exams.html" class="nav-item active">📝 My Exams</a>
+        <a href="/static/teacher/results.html" class="nav-item">📈 Submissions & Results</a>
+        <a href="/static/teacher/analytics.html" class="nav-item">📊 Performance Analytics</a>
+      </nav>
+      <div class="sidebar-user">
+        <div class="user-info">
+          <div class="avatar" id="header-user-avatar">T</div>
+          <div class="user-details"><h5 id="header-user-name">Teacher</h5><span id="header-user-role">TEACHER</span></div>
+        </div>
+        <button onclick="handleLogout()" class="btn btn-sm btn-outline" style="color:#FFF; border-color:#475569;">Exit</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="page-title"><h2>Manage Created Examinations</h2></div>
+        <div class="topbar-actions">
+          <a href="/static/teacher/create-exam.html" class="btn btn-primary btn-sm">+ Create New Exam</a>
+        </div>
+      </header>
+
+      <div class="content-body">
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Title</th>
+                <th>Subject</th>
+                <th>Duration</th>
+                <th>Questions</th>
+                <th>Status</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="teacher-exams-body"></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/teacher.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", loadTeacherExamsList);
+  </script>
+</body>
+</html>

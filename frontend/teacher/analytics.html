@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Performance Analytics — Teacher</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+  <div class="app-layout">
+    <aside class="sidebar">
+      <div class="sidebar-header"><div class="sidebar-logo">ExamCloud <span>AI</span></div></div>
+      <nav class="sidebar-nav">
+        <a href="/static/teacher/dashboard.html" class="nav-item">📊 Dashboard</a>
+        <a href="/static/teacher/create-exam.html" class="nav-item">➕ Create Exam</a>
+        <a href="/static/teacher/exams.html" class="nav-item">📝 My Exams</a>
+        <a href="/static/teacher/results.html" class="nav-item">📈 Submissions & Results</a>
+        <a href="/static/teacher/analytics.html" class="nav-item active">📊 Performance Analytics</a>
+      </nav>
+      <div class="sidebar-user">
+        <div class="user-info">
+          <div class="avatar" id="header-user-avatar">T</div>
+          <div class="user-details"><h5 id="header-user-name">Teacher</h5><span id="header-user-role">TEACHER</span></div>
+        </div>
+        <button onclick="handleLogout()" class="btn btn-sm btn-outline" style="color:#FFF; border-color:#475569;">Exit</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="page-title"><h2>Class Performance Analytics</h2></div>
+      </header>
+
+      <div class="content-body">
+        <div class="grid grid-2">
+          <div class="card">
+            <h3>Pass / Fail Ratio Distribution</h3>
+            <div style="margin-top:24px; display:flex; flex-direction:column; gap:16px;">
+              <div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-weight:600;">
+                  <span>Passed Submissions</span>
+                  <span id="pass-count-label">0</span>
+                </div>
+                <div style="height:12px; background:#E2E8F0; border-radius:6px; overflow:hidden;">
+                  <div id="pass-bar" style="height:100%; background:var(--success); width:0%;"></div>
+                </div>
+              </div>
+
+              <div>
+                <div style="display:flex; justify-content:space-between; margin-bottom:6px; font-weight:600;">
+                  <span>Failed Submissions</span>
+                  <span id="fail-count-label">0</span>
+                </div>
+                <div style="height:12px; background:#E2E8F0; border-radius:6px; overflow:hidden;">
+                  <div id="fail-bar" style="height:100%; background:var(--danger); width:0%;"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Key Class Metrics</h3>
+            <div style="margin-top:20px; display:flex; flex-direction:column; gap:12px;">
+              <div class="stat-card" style="border:none; background:#F8FAFC;">
+                <div>
+                  <span style="font-size:13px; color:var(--text-muted);">Class Average Score</span>
+                  <div class="stat-val" id="analytics-avg">0%</div>
+                </div>
+              </div>
+              <div class="stat-card" style="border:none; background:#F8FAFC;">
+                <div>
+                  <span style="font-size:13px; color:var(--text-muted);">Total Evaluated Submissions</span>
+                  <div class="stat-val" id="analytics-total">0</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", async () => {
+      checkAuthGuard("teacher");
+      try {
+        const stats = await apiFetch("/stats/teacher");
+        document.getElementById("analytics-avg").textContent = `${stats.average_score}%`;
+        document.getElementById("analytics-total").textContent = stats.total_submissions;
+        document.getElementById("pass-count-label").textContent = `${stats.passed_submissions} (${stats.pass_rate}%)`;
+        document.getElementById("fail-count-label").textContent = `${stats.failed_submissions}`;
+
+        if (stats.total_submissions > 0) {
+          const passPct = (stats.passed_submissions / stats.total_submissions) * 100;
+          const failPct = (stats.failed_submissions / stats.total_submissions) * 100;
+          document.getElementById("pass-bar").style.width = `${passPct}%`;
+          document.getElementById("fail-bar").style.width = `${failPct}%`;
+        }
+      } catch (err) {
+        showToast("Error loading analytics", "danger");
+      }
+    });
+  </script>
+</body>
+</html>

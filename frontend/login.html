@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login — ExamCloud AI</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/auth.css">
+</head>
+<body class="auth-page">
+
+  <div class="auth-container">
+    <div class="auth-brand">
+      <div class="auth-brand-logo">ExamCloud <span>AI</span></div>
+      <p class="auth-subtitle">Sign in to your examination portal</p>
+    </div>
+
+    <!-- Quick Credentials Hint for Testing -->
+    <div style="background:#F1F5F9; border-radius:8px; padding:12px; margin-bottom:20px; font-size:12px; color:var(--text-muted);">
+      <strong>Demo Credentials:</strong><br>
+      • Admin: <code>admin@examcloud.com</code> / <code>admin123</code><br>
+      • Teacher: <code>teacher1@examcloud.com</code> / <code>teacher123</code><br>
+      • Student: <code>student1@examcloud.com</code> / <code>student123</code>
+    </div>
+
+    <form id="login-form" onsubmit="handleLogin(event)">
+      <div class="form-group">
+        <label class="form-label" for="email">Email Address</label>
+        <input type="email" id="email" class="form-control" placeholder="name@institution.edu" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="password">Password</label>
+        <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+      </div>
+
+      <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 10px;">Sign In →</button>
+    </form>
+
+    <div style="text-align: center; margin-top: 24px; font-size: 14px; color: var(--text-muted);">
+      Don't have a student account? <a href="/static/register.html">Register here</a>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+</body>
+</html>

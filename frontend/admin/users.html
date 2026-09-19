@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Directory — Admin</title>
+  <link rel="stylesheet" href="/static/css/style.css">
+  <link rel="stylesheet" href="/static/css/dashboard.css">
+</head>
+<body>
+  <div class="app-layout">
+    
+    <aside class="sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-logo">ExamCloud <span>AI</span></div>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="/static/admin/dashboard.html" class="nav-item">📊 Dashboard</a>
+        <a href="/static/admin/users.html" class="nav-item active">👥 User Directory</a>
+        <a href="/static/admin/teachers.html" class="nav-item">👨‍🏫 Teachers</a>
+        <a href="/static/admin/students.html" class="nav-item">🎓 Students</a>
+        <a href="/static/admin/subjects.html" class="nav-item">📚 Subjects</a>
+        <a href="/static/admin/exams.html" class="nav-item">📝 Exam Monitor</a>
+        <a href="/static/admin/results.html" class="nav-item">📈 System Results</a>
+      </nav>
+      <div class="sidebar-user">
+        <div class="user-info">
+          <div class="avatar" id="header-user-avatar">A</div>
+          <div class="user-details">
+            <h5 id="header-user-name">Admin</h5>
+            <span id="header-user-role">ADMIN</span>
+          </div>
+        </div>
+        <button onclick="handleLogout()" class="btn btn-sm btn-outline" style="color:#FFF; border-color:#475569;">Exit</button>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="page-title">
+          <h2>User Directory Management</h2>
+        </div>
+        <div class="topbar-actions">
+          <button class="btn btn-primary btn-sm" onclick="openModal('user-modal')">+ Add New User</button>
+        </div>
+      </header>
+
+      <div class="content-body">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;">
+          <div>
+            <button class="btn btn-sm btn-secondary" onclick="loadUsersList('')">All Users</button>
+            <button class="btn btn-sm btn-secondary" onclick="loadUsersList('teacher')">Teachers Only</button>
+            <button class="btn btn-sm btn-secondary" onclick="loadUsersList('student')">Students Only</button>
+            <button class="btn btn-sm btn-secondary" onclick="loadUsersList('admin')">Admins</button>
+          </div>
+        </div>
+
+        <div class="table-responsive">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Role</th>
+                <th>Department</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody id="users-table-body">
+              <!-- Loaded via JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- User Modal -->
+  <div class="modal-backdrop" id="user-modal">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h3>Create New User</h3>
+        <button class="btn btn-sm btn-secondary" onclick="closeModal('user-modal')">✕</button>
+      </div>
+      <form onsubmit="handleCreateUserModal(event)">
+        <div class="form-group">
+          <label class="form-label">Full Name</label>
+          <input type="text" id="modal-name" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input type="email" id="modal-email" class="form-control" required>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Role</label>
+          <select id="modal-role" class="form-control">
+            <option value="student">Student</option>
+            <option value="teacher">Teacher</option>
+            <option value="admin">Admin</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Department</label>
+          <input type="text" id="modal-department" class="form-control" placeholder="Computer Science">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input type="password" id="modal-password" class="form-control" required>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="closeModal('user-modal')">Cancel</button>
+          <button type="submit" class="btn btn-primary">Create User</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script src="/static/js/api.js"></script>
+  <script src="/static/js/auth.js"></script>
+  <script src="/static/js/admin.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => loadUsersList());
+  </script>
+</body>
+</html>
